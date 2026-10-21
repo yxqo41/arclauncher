@@ -35,6 +35,7 @@ import 'package:flauncher/widgets/launcher_alternative_view.dart';
 import 'package:flauncher/widgets/focus_aware_app_bar.dart';
 import 'package:flauncher/widgets/wallpaper_video_background.dart';
 import 'package:flauncher/widgets/watch_next_row.dart';
+import 'package:flauncher/widgets/apple_tv_profile_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
@@ -61,6 +62,7 @@ class _FLauncherState extends State<FLauncher> with WidgetsBindingObserver {
   final GlobalKey<FocusAwareAppBarState> _appBarKey = GlobalKey();
   final ScrollController _scrollController = ScrollController();
   final GlobalKey _dockKey = GlobalKey();
+  bool _showProfileOverlay = true;
 
   @override
   void initState() {
@@ -79,6 +81,11 @@ class _FLauncherState extends State<FLauncher> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       context.read<WatchNextService>().refreshPermissionAndItems();
+      if (!_showProfileOverlay) {
+        setState(() {
+          _showProfileOverlay = true;
+        });
+      }
     }
   }
 
@@ -145,6 +152,16 @@ class _FLauncherState extends State<FLauncher> with WidgetsBindingObserver {
               ),
             ),
           ),
+          if (_showProfileOverlay)
+            Positioned.fill(
+              child: AppleTvProfileSelector(
+                onProfileSelected: (profile) {
+                  setState(() {
+                    _showProfileOverlay = false;
+                  });
+                },
+              ),
+            ),
         ],
       ),
     ),
