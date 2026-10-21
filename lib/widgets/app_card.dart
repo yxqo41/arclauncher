@@ -217,7 +217,7 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
                         fit: StackFit.expand,
                         children: [
                           Material(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(26),
                             clipBehavior: Clip.antiAlias,
                             elevation: shouldHighlight ? 7 : 4,
                             shadowColor: Colors.black,
@@ -630,7 +630,7 @@ class _HighlightOutline extends StatelessWidget {
       children: [
         DecoratedBox(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(26),
             border: Border.all(color: color, width: 1),
           ),
         ),
